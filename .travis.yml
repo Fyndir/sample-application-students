@@ -10,7 +10,7 @@ script:
   - docker build ./sample-application-http-api-server/. -t $user/backend 
   - docker login -u $user -p $psw
   - docker push $user/backend
-  - docker build ./sample-application-db-changelog-job/. -t $user/db-changelog
+  - docker build ./sample-application-db-changelog-job/. -t $user/db-changelog-job
   - docker push $user/db-changelog
   - docker build ./Bdd/. -t $user/bdd
   - docker push $user/bdd
