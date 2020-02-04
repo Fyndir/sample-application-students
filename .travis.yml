@@ -1,3 +1,10 @@
 language: java
 sudo: false
 install: true
+
+service: 
+  - docker
+script: 
+  - mvn clean verify
+  - mvn packages -DskipTests
+    
