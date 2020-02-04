@@ -7,10 +7,10 @@ service:
 script: 
   - mvn clean verify
   - mvn package -DskipTests
-  - docker build ./sample-application-http-api-server/. -t sample-application-http-api-server 
+  - docker build ./sample-application-http-api-server/. -t $user/sample-application-http-api-server 
   - docker login -u $user -p $psw
   - docker push $user/sample-application-http-api-server 
-  - docker build ./sample-application-db-changelog-job/. -t sample-application-db-changelog-job
+  - docker build ./sample-application-db-changelog-job/. -t $user/sample-application-db-changelog-job
   - docker push $user/sample-application-db-changelog-job
 
 cache:
