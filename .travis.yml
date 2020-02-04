@@ -9,4 +9,7 @@ script:
   - mvn packages -DskipTests
   - docker build ./sample-application-http-api-server/. -t sample-application-http-api-server 
   - docker build ./sample-application-db-changelog-job/. -t sample-application-db-changelog-job
-    
+cache:
+  directories:
+  - .autoconf
+  - $HOME/.m2
