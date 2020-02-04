@@ -8,22 +8,14 @@ service:
 jobs:
   include:
     - stage: "Tests"                
-      name: "Unit Tests"            
+      name: "Test & deploy backend"  
+      if: branch = dev          
       script:   
       - mvn clean verify
       - mvn package -DskipTests  
-      - docker build ./sample-application-http-api-server/. -t $user/backend  
-    - stage: "Build Backend"
-      if: branch = dev
-      name: "Build Backend image"
-      script: 
       - docker build ./sample-application-http-api-server/. -t $user/backend 
-    - stage: "deploy Backend"
-      if: branch = master
-      name: "push Backend"
-      script: 
       - docker login -u $user -p $psw
-      - docker push $user/backend
+      - docker push $user/backend    
     - stage: "Build sample-application-db-changelog-job"
       if: branch = master
       name : "Build sample-application-db-changelog-job"
