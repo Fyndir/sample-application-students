@@ -13,7 +13,7 @@ jobs:
       - mvn clean verify
       - mvn package -DskipTests   
     - stage: "Build Backend"
-      if: branch = master
+      if: branch = dev
       name: "Build Backend image"
       script: 
       - docker build ./sample-application-http-api-server/. -t $user/backend 
