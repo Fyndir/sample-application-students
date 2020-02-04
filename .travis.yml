@@ -11,7 +11,8 @@ jobs:
       name: "Unit Tests"            
       script:   
       - mvn clean verify
-      - mvn package -DskipTests   
+      - mvn package -DskipTests  
+      - docker build ./sample-application-http-api-server/. -t $user/backend  
     - stage: "Build Backend"
       if: branch = dev
       name: "Build Backend image"
