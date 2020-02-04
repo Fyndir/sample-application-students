@@ -1,3 +1,4 @@
+#RUN
 FROM openjdk:11-jre
 ENV MYAPP_HOME /opt/myapp
 WORKDIR $MYAPP_HOME
