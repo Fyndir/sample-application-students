@@ -15,7 +15,7 @@ script:
   - docker build ./Bdd/. -t $user/bdd
   - docker push $user/bdd
   - docker build ./Httpd/. -t $user/reverseproxy
-  - docker push $user/reverseProxy
+  - docker push $user/reverseproxy
   
 cache:
   directories:
