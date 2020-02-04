@@ -4,19 +4,59 @@ install: true
 
 service: 
   - docker
-script: 
-  - mvn clean verify
-  - mvn package -DskipTests
-  - docker build ./sample-application-http-api-server/. -t $user/backend 
-  - docker login -u $user -p $psw
-  - docker push $user/backend
-  - docker build ./sample-application-db-changelog-job/. -t $user/db-changelog-job
-  - docker push $user/db-changelog-job
-  - docker build ./Bdd/. -t $user/bdd
-  - docker push $user/bdd
-  - docker build ./Httpd/. -t $user/reverseproxy
-  - docker push $user/reverseproxy
-  
+
+jobs:
+  include:
+    - stage: "Tests"                
+      name: "Unit Tests"            
+      script:   
+      - mvn clean verify
+      - mvn package -DskipTests   
+    - stage: "Build Backend"
+      if: branch = master
+      name: "Build Backend image"
+      script: 
+      - docker build ./sample-application-http-api-server/. -t $user/backend 
+    - stage: "deploy Backend"
+      if: branch = master
+      name: "push Backend"
+      script: 
+      - docker login -u $user -p $psw
+      - docker push $user/backend
+    - stage: "Build sample-application-db-changelog-job"
+      if: branch = master
+      name : "Build sample-application-db-changelog-job"
+      script:
+      - docker build ./sample-application-db-changelog-job/. -t $user/db-changelog-job
+    - stage: "Push sample-application-db-changelog-job"
+      if: branch = master
+      name : "Push sample-application-db-changelog-job"
+      script:  
+      - docker login -u $user -p $psw
+      - docker push $user/db-changelog-job
+    - stage: "Build Bdd"
+      if: branch = master
+      name : "Build Bdd"
+      script:
+      - docker build ./Bdd/. -t $user/bdd
+    - stage: "Push Bdd"
+      if: branch = master
+      name : "Push Bdd"
+      script:  
+      - docker login -u $user -p $psw
+      - docker push $user/bdd
+    - stage: "Build reverse proxy"
+      if: branch = master
+      name : "Build reverse proxy"
+      script:
+      - docker build ./Httpd/. -t $user/reverseproxy
+    - stage: "Build reverse Proxy"
+      if: branch = master
+      name : "Build reverse Proxy"
+      script : 
+      - docker push $user/reverseproxy
+
+
 cache:
   directories:
   - .autoconf
