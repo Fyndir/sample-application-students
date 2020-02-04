@@ -9,7 +9,7 @@ jobs:
   include:
     - stage: "Tests"                
       name: "Test & deploy backend"  
-      if: branch = dev          
+      if: branch = master          
       script:   
       - mvn clean verify
       - mvn package -DskipTests  
