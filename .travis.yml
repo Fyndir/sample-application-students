@@ -7,12 +7,16 @@ service:
 script: 
   - mvn clean verify
   - mvn package -DskipTests
-  - docker build ./sample-application-http-api-server/. -t $user/sample-application-http-api-server 
+  - docker build ./sample-application-http-api-server/. -t $user/backend 
   - docker login -u $user -p $psw
-  - docker push $user/sample-application-http-api-server 
-  - docker build ./sample-application-db-changelog-job/. -t $user/sample-application-db-changelog-job
-  - docker push $user/sample-application-db-changelog-job
-
+  - docker push $user/backend
+  - docker build ./sample-application-db-changelog-job/. -t $user/db-changelog-
+  - docker push $user/db-changelog
+  - docker build ./Bdd/. -t $user/bdd
+  - docker push $user/bdd
+  - docker build ./Httpd/. -t $user/reverseProxy
+  - docker push $user/reverseProxy
+  
 cache:
   directories:
   - .autoconf
