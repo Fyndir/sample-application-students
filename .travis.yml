@@ -16,15 +16,17 @@ before_install:
 jobs:
   include:
     - stage: "Tests"                
-      name: "Test & deploy backend"  
+      name: "Test backend"  
       if: branch = dev          
-      script:   
+      script:  
+      - cd  ~/$TRAVIS_BUILD_NUMBER
       - mvn clean verify
       - mvn package -DskipTests  
     - stage: "Build backen"                
       name: "Build backend"  
       if: branch = dev          
       script: 
+      - cd  ~/$TRAVIS_BUILD_NUMBER
       - docker build ./sample-application-http-api-server/. -t $user/backend 
     - stage: "Deploy backend"                
       name: "deploy backend"  
