@@ -5,15 +5,31 @@ install: true
 service: 
   - docker
 
+env:
+  global:
+    # include $HOME/.local/bin for `aws`
+    - PATH=$HOME/.local/bin:$PATH
+
+before_install:
+  - mkdir -p ~/$TRAVIS_BUILD_NUMBER
+
 jobs:
   include:
     - stage: "Tests"                
       name: "Test & deploy backend"  
-      if: branch = master          
+      if: branch = dev          
       script:   
       - mvn clean verify
       - mvn package -DskipTests  
+    - stage: "Build backen"                
+      name: "Build backend"  
+      if: branch = dev          
+      script: 
       - docker build ./sample-application-http-api-server/. -t $user/backend 
+    - stage: "Deploy backend"                
+      name: "deploy backend"  
+      if: branch = dev          
+      script: 
       - docker login -u $user -p $psw
       - docker push $user/backend    
     - stage: "Build sample-application-db-changelog-job"
@@ -43,10 +59,11 @@ jobs:
       name : "Build reverse proxy"
       script:
       - docker build ./Httpd/. -t $user/reverseproxy
-    - stage: "Build reverse Proxy"
+    - stage: "Push reverse Proxy"
       if: branch = master
       name : "Build reverse Proxy"
       script : 
+      - docker login -u $user -p $psw
       - docker push $user/reverseproxy
 
 
