@@ -1,0 +1,16 @@
+version: '3'
+services:
+  docker_backend:
+    build: ./Backend/.
+    networks : 
+      - ndevops
+   
+ 
+    networks : 
+      - ndevops
+
+networks : 
+    ndevops :
+  
+  
+  
