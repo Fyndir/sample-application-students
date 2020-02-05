@@ -11,9 +11,7 @@ services:
     build: ./Bdd/. 
     networks : 
       - ndevops
-    image : fyndir/pg_devops
-    volumes : 
-      - /tmp/data:/var/lib/postgresql/data 
+    image : fyndir/pg_devops 
   my-running-app : 
     build : ./Httpd/.
     image : fyndir/my-running-app
