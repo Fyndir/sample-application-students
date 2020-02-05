@@ -1,0 +1,22 @@
+- hosts: all
+  gather_facts: false
+  become: yes
+  roles : 
+    - common
+    - docker
+
+  tasks:
+    - name : Run BDD
+      docker_container:
+        name: pg_devops
+        image : fyndir/pg_devops
+    
+    - name : Run backend
+      docker_container:
+        name: docker_backend
+        image : fyndir/docker_backend
+    
+    - name : Run HTTPD
+      docker_container:
+        name: my-running-app
+        image : fyndir/my-running-app
