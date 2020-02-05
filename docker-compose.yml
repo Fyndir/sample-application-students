@@ -1,27 +1,31 @@
 version: '3'
 services:
-  fyndir/docker_backend:
+  docker_backend:
     build: ./sample-application-http-api-server/.
+    image : fyndir/docker_backend
     networks : 
       - ndevops
     depends_on : 
       - pg_devops
-  fyndir/pg_devops:
+  pg_devops:
     build: ./Bdd/. 
     networks : 
       - ndevops
+    image : fyndir/pg_devops
     volumes : 
       - /tmp/data:/var/lib/postgresql/data 
-  fyndir/my-running-app : 
+  my-running-app : 
     build : ./Httpd/.
+    image : fyndir/my-running-app
     ports : 
       - "80:80"
     networks : 
       - ndevops
-  fyndir/db-changelog-job : 
+  db-changelog-job : 
     build : ./sample-application-db-changelog-job/.
     networks : 
       - ndevops
+    image : fyndir/db-changelog-job
 
 networks : 
     ndevops :
