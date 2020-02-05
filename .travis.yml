@@ -5,6 +5,9 @@ install: true
 service: 
   - docker
 
+before_install:
+  mkdir -p ~/$TRAVIS_BUILD_NUMBER
+
 jobs:
   include:
     - stage: "Tests"                
@@ -12,49 +15,17 @@ jobs:
       if: branch = master          
       script:        
       - mvn clean verify
-      - mvn package -DskipTests  
-    - stage: "Build backend"                
-      name: "Build backend"  
-      if: branch = master          
-      script:          
-      - docker build sample-application-http-api-server/. -t $user/backend 
-    - stage: "Deploy backend"                
-      name: "deploy backend"  
-      if: branch = master          
-      script: 
+      - mvn package -DskipTests             
+      - docker build sample-application-http-api-server/. -t $user/backend    
       - docker login -u $user -p $psw
-      - docker push $user/backend    
-    - stage: "Build sample-application-db-changelog-job"
-      if: branch = master
-      name : "Build sample-application-db-changelog-job"
-      script:
-      - docker build sample-application-db-changelog-job/. -t $user/db-changelog-job
-    - stage: "Push sample-application-db-changelog-job"
-      if: branch = master
-      name : "Push sample-application-db-changelog-job"
-      script:  
+      - docker push $user/backend        
+      - docker build sample-application-db-changelog-job/. -t $user/db-changelog-job    
       - docker login -u $user -p $psw
       - docker push $user/db-changelog-job
-    - stage: "Build Bdd"
-      if: branch = dev
-      name : "Build Bdd"
-      script:
-      - docker build Bdd/. -t $user/bdd
-    - stage: "Push Bdd"
-      if: branch = dev
-      name : "Push Bdd"
-      script:  
+      - docker build Bdd/. -t $user/bdd 
       - docker login -u $user -p $psw
       - docker push $user/bdd
-    - stage: "Build reverse proxy"
-      if: branch = master
-      name : "Build reverse proxy"
-      script:
-      - docker build ./Httpd/. -t $user/reverseproxy
-    - stage: "Push reverse Proxy"
-      if: branch = master
-      name : "Build reverse Proxy"
-      script : 
+      - docker build ./Httpd/. -t $user/reverseproxy 
       - docker login -u $user -p $psw
       - docker push $user/reverseproxy
 
