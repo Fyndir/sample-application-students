@@ -124,7 +124,7 @@ networks :
 
 # Travis
 
-On pzut declancher des traitement spécifique à la suite d'un push sur git ; pour cela on utilise un outil de CI/CD : travis (https://travis-ci.org/)
+On peut declancher des traitement spécifique à la suite d'un push sur git ; pour cela on utilise un outil de CI/CD : travis (https://travis-ci.org/)
 
 ```yaml
 language: java
