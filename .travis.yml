@@ -5,13 +5,10 @@ install: true
 service: 
   - docker
 
-before_install:
-  mkdir -p ~/$TRAVIS_BUILD_NUMBER
-
 jobs:
   include:
     - stage: "Tests"                
-      name: "Test backend"  
+      name: "Test"  
       if: branch = master          
       script:        
       - mvn clean verify
