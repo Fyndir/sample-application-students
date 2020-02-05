@@ -9,15 +9,14 @@ jobs:
   include:
     - stage: "Tests"                
       name: "Test backend"  
-      if: branch = dev          
+      if: branch = master          
       script:        
       - mvn clean verify
       - mvn package -DskipTests  
     - stage: "Build backend"                
       name: "Build backend"  
-      if: branch = dev          
-      script:    
-      - ls /sample-application-http-api-server/.
+      if: branch = master          
+      script:          
       - docker build sample-application-http-api-server/. -t $user/backend 
     - stage: "Deploy backend"                
       name: "deploy backend"  
@@ -37,7 +36,7 @@ jobs:
       - docker login -u $user -p $psw
       - docker push $user/db-changelog-job
     - stage: "Build Bdd"
-      if: branch = master
+      if: branch = dev
       name : "Build Bdd"
       script:
       - docker build Bdd/. -t $user/bdd
