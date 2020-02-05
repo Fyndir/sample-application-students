@@ -28,7 +28,7 @@ jobs:
       - docker build sample-application-db-changelog-job/. -t $user/db-changelog-job 
       - docker login -u $user -p $psw
       - docker push $user/docker_backend       
-      - docker push $user/db-changelog-job      - 
+      - docker push $user/db-changelog-job 
       - docker push $user/pg_devops
       - docker push $user/my-running-app
 
