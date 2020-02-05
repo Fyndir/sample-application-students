@@ -3,9 +3,7 @@ services:
   docker_backend:
     build: ./sample-application-http-api-server/.
     container_name : docker_backend
-    image : fyndir/docker_backend
-    ports : 
-      - "8080:8080"
+    image : fyndir/docker_backend    
     networks : 
       - ndevops
     depends_on : 

@@ -22,7 +22,9 @@ jobs:
       script:        
       - mvn clean verify
       - mvn package -DskipTests             
-      - docker-compose build
+      - docker build /Bdd/. -t $user/pg_devops
+      - docker build /Httpd/. -t $user/my-running-app
+      - docker build /sample-application-http-api-server/. -t $user/docker_backend  
       - docker login -u $user -p $psw
       - docker push $user/docker_backend       
       - docker push $user/db-changelog-job      - 
