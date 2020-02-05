@@ -5,26 +5,32 @@ install: true
 service: 
   - docker
 
+env:
+  - DOCKER_COMPOSE_VERSION=1.4.2
+
+before_install:
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+
 jobs:
   include:
     - stage: "Tests"                
       name: "Test"  
-      if: branch = master          
+      if: branch = dev          
       script:        
       - mvn clean verify
       - mvn package -DskipTests             
-      - docker build sample-application-http-api-server/. -t $user/backend    
+      - docker-compose build
       - docker login -u $user -p $psw
-      - docker push $user/backend        
-      - docker build sample-application-db-changelog-job/. -t $user/db-changelog-job    
+      - docker push $user/docker_backend        
       - docker login -u $user -p $psw
-      - docker push $user/db-changelog-job
-      - docker build Bdd/. -t $user/bdd 
+      - docker push $user/db-changelog-job      - 
       - docker login -u $user -p $psw
-      - docker push $user/bdd
-      - docker build ./Httpd/. -t $user/reverseproxy 
+      - docker push $user/pg_devops
       - docker login -u $user -p $psw
-      - docker push $user/reverseproxy
+      - docker push $user/my-running-app
 
 
 cache:
