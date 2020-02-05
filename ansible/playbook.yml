@@ -1,0 +1,31 @@
+- hosts: all
+  gather_facts: false
+  become: true
+  roles : 
+    - common
+    - docker
+
+  tasks:
+  - name : Create docker network
+    docker_network:
+      name: ndevops
+  - name : Run BDD
+    docker_container:
+      name: pg_devops
+      image : fyndir/pg_devops
+      networks: 
+        - name : ndevops    
+  - name : Run backend
+    docker_container:
+      name: docker_backend
+      image : fyndir/docker_backend
+      networks: 
+        - name: ndevops    
+  - name : Run HTTPD
+    docker_container:
+      name: my-running-app
+      image : fyndir/my-running-app
+      networks: 
+        - name: ndevops
+      ports : 
+        - "80:80"

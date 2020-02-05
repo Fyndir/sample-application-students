@@ -1,5 +1,4 @@
-Antoine gamain
-
+Antoine gamain 
 Enzo Baldisserri
 
 
@@ -28,7 +27,8 @@ POSTGRES_PASSWORD=pwd
 
 copy ./SQL /docker-entrypoint-initdb.d
 ```
-> On spécifie les user/psw dans le dockerfile
+> On spécifie les user/pwd dans le dockerfile
+> On copie les scripts d'initialisation dans le conteneur pour qu'ils soient executés au déploiement
 
 ### Commande bash
 
@@ -133,6 +133,8 @@ install: true
 
 service: 
   - docker
+install:
+  - pip install ansible
 
 jobs:
   include:
@@ -142,20 +144,17 @@ jobs:
       script:        
       - mvn clean verify
       - mvn package -DskipTests             
-      - docker build sample-application-http-api-server/. -t $user/backend    
+      - docker build Bdd/. -t $user/pg_devops
+      - docker build Httpd/. -t $user/my-running-app
+      - docker build sample-application-http-api-server/. -t $user/docker_backend 
+      - docker build sample-application-db-changelog-job/. -t $user/db-changelog-job 
       - docker login -u $user -p $psw
-      - docker push $user/backend        
-      - docker build sample-application-db-changelog-job/. -t $user/db-changelog-job    
-      - docker login -u $user -p $psw
-      - docker push $user/db-changelog-job
-      - docker build Bdd/. -t $user/bdd 
-      - docker login -u $user -p $psw
-      - docker push $user/bdd
-      - docker build ./Httpd/. -t $user/reverseproxy 
-      - docker login -u $user -p $psw
-      - docker push $user/reverseproxy
-
-
+      - docker push $user/docker_backend       
+      - docker push $user/db-changelog-job 
+      - docker push $user/pg_devops
+      - docker push $user/my-running-app
+      - echo $key-ssh> ssh_devops
+      - ansible-playbook -i ansible/inventories/setup.yml ansible/playbook.yml --private_key ssh_devops
 cache:
   directories:
   - .autoconf
@@ -170,3 +169,6 @@ Initialisation de SonarCloud:
 - "Analyze new project" > "sample-application-students"
 - Ajout du fichier vide nommé .sonarcloud.properties dans le dépôt git
 - Fini !
+
+# Ansible
+
