@@ -1,0 +1,26 @@
+version: '3'
+services:
+  docker_backend:
+    build: ./sample-application-http-api-server/.
+    networks : 
+      - ndevops
+    depends_on : 
+      - pg_devops
+  pg_devops:
+    build: ./Bdd/. 
+    networks : 
+      - ndevops
+    volumes : 
+      - /tmp/data:/var/lib/postgresql/data 
+  my-running-app : 
+    build : ./Httpd/.
+    ports : 
+      - "80:80"
+    networks : 
+      - ndevops
+
+networks : 
+    ndevops :
+  
+  
+  

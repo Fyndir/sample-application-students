@@ -8,6 +8,6 @@ spring:
     generate-ddl: false
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: "jdbc:postgresql://postgrey:5432/SchoolOrganisation"
+    url: "jdbc:postgresql://pg_devops:5432/SchoolOrganisation"
     username: takima
     password: takimapass
