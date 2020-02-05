@@ -163,3 +163,10 @@ cache:
 
 ```
 
+## SonarCloud
+
+Initialisation de SonarCloud:
+- Création d'une organisation sur [SonarCloud](https://sonarcloud.io/)
+- "Analyze new project" > "sample-application-students"
+- Ajout du fichier vide nommé .sonarcloud.properties dans le dépôt git
+- Fini !
