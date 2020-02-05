@@ -27,5 +27,5 @@
       image : fyndir/my-running-app
       networks: 
         - name: ndevops
-      exposed_ports : 
-      - "80"
+      ports : 
+        - "80:80"
