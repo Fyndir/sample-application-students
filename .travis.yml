@@ -5,28 +5,19 @@ install: true
 service: 
   - docker
 
-env:
-  global:
-    # include $HOME/.local/bin for `aws`
-    - PATH=$HOME/.local/bin:$PATH
-
-before_install:
-  - mkdir -p ~/$TRAVIS_BUILD_NUMBER
-
 jobs:
   include:
     - stage: "Tests"                
       name: "Test backend"  
       if: branch = dev          
-      script:  
-      - cd  ~/$TRAVIS_BUILD_NUMBER
+      script:        
       - mvn clean verify
       - mvn package -DskipTests  
     - stage: "Build backen"                
       name: "Build backend"  
       if: branch = dev          
-      script: 
-      - cd  ~/$TRAVIS_BUILD_NUMBER
+      script:    
+      - ls 
       - docker build ./sample-application-http-api-server/. -t $user/backend 
     - stage: "Deploy backend"                
       name: "deploy backend"  
