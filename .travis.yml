@@ -17,7 +17,7 @@ jobs:
       name: "Build backend"  
       if: branch = dev          
       script:    
-      - ls 
+      - ls /sample-application-http-api-server/
       - docker build ./sample-application-http-api-server/. -t $user/backend 
     - stage: "Deploy backend"                
       name: "deploy backend"  
