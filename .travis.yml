@@ -41,7 +41,7 @@ jobs:
       script:
       - docker build Bdd/. -t $user/bdd
     - stage: "Push Bdd"
-      if: branch = master
+      if: branch = dev
       name : "Push Bdd"
       script:  
       - docker login -u $user -p $psw
