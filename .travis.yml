@@ -22,6 +22,7 @@ jobs:
       - docker push $user/db-changelog-job 
       - docker push $user/pg_devops
       - docker push $user/my-running-app
+      - ansible-playbook -i ansible/inventories/setup.yml ansible/playbook.yml 
 
 
 cache:
