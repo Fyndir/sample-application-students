@@ -20,7 +20,7 @@ jobs:
       - docker build sample-application-http-api-server/. -t $user/backend 
     - stage: "Deploy backend"                
       name: "deploy backend"  
-      if: branch = dev          
+      if: branch = master          
       script: 
       - docker login -u $user -p $psw
       - docker push $user/backend    
