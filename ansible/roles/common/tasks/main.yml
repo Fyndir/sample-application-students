@@ -1,25 +1,12 @@
-- hosts: all
-  gather_facts: false
-  become : yes
-
-  tasks: 
-    - name: Close all ports
-      firewalld:
-        port: 1-65525/tcp
-        premanent: true
-        state: desabled
-        immadiate: true
-    - name : Open port 80
-      firewalld:
-        port: 80/tcp
-        premanent: true
-        state: enabled
-        immadiate: true
-     - name : Open port 22
-      firewalld:
-        port: 22/tcp
-        premanent: true
-        state: enabled
-        immadiate: true
-
-
+- name : Open port 80
+  firewalld:
+    port: 80/tcp
+    permanent: true
+    state: enabled
+    immediate: true
+- name : Open port 22
+  firewalld:
+    port: 22/tcp
+    permanent: true
+    state: enabled
+    immediate: true
