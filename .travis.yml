@@ -13,12 +13,12 @@ jobs:
       script:        
       - mvn clean verify
       - mvn package -DskipTests  
-    - stage: "Build backen"                
+    - stage: "Build backend"                
       name: "Build backend"  
       if: branch = dev          
       script:    
-      - ls /sample-application-http-api-server/
-      - docker build ./sample-application-http-api-server/. -t $user/backend 
+      - ls /sample-application-http-api-server/.
+      - docker build sample-application-http-api-server/. -t $user/backend 
     - stage: "Deploy backend"                
       name: "deploy backend"  
       if: branch = dev          
@@ -29,7 +29,7 @@ jobs:
       if: branch = master
       name : "Build sample-application-db-changelog-job"
       script:
-      - docker build ./sample-application-db-changelog-job/. -t $user/db-changelog-job
+      - docker build sample-application-db-changelog-job/. -t $user/db-changelog-job
     - stage: "Push sample-application-db-changelog-job"
       if: branch = master
       name : "Push sample-application-db-changelog-job"
@@ -40,7 +40,7 @@ jobs:
       if: branch = master
       name : "Build Bdd"
       script:
-      - docker build ./Bdd/. -t $user/bdd
+      - docker build Bdd/. -t $user/bdd
     - stage: "Push Bdd"
       if: branch = master
       name : "Push Bdd"
