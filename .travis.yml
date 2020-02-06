@@ -4,8 +4,8 @@ install: true
 
 service: 
   - docker
-install:
-  - pip install ansible
+#install:
+ # - pip install ansible
 
 jobs:
   include:
@@ -24,8 +24,8 @@ jobs:
       - docker push $user/db-changelog-job 
       - docker push $user/pg_devops
       - docker push $user/my-running-app
-      - echo $key-ssh> ssh_devops
-      - ansible-playbook -i ansible/inventories/setup.yml ansible/playbook.yml --private_key ssh_devops
+      #- echo $key-ssh> ssh_devops
+      #- ansible-playbook -i ansible/inventories/setup.yml ansible/playbook.yml --private_key ssh_devops
 
 
 cache:
