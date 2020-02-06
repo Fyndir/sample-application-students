@@ -100,24 +100,30 @@ Il existe un moyen de simplifier cette opération à l'aide d'un docker-compose 
 version: '3'
 services:
   docker_backend:
-    build: ./simple-api/.
+    build: ./sample-application-http-api-server/.
+    container_name : docker_backend
+    image : fyndir/docker_backend    
     networks : 
       - ndevops
     depends_on : 
       - pg_devops
   pg_devops:
+    container_name: pg_devops
     build: ./Bdd/. 
     networks : 
       - ndevops
-    volumes : 
-      - /tmp/data:/var/lib/postgresql/data 
-  my-running-app : 
+    image : fyndir/pg_devops 
+  my-running-app :
+    container_name : my-running-app
     build : ./Httpd/.
+    image : fyndir/my-running-app
     ports : 
       - "80:80"
     networks : 
       - ndevops
-
+    depends_on : 
+      - docker_backend
+ 
 networks : 
     ndevops :
 ```
