@@ -232,12 +232,6 @@ le fichier main.yml placer dans le dossier task sera exécuter à l'appel du rol
     permanent: true
     state: enabled
     immediate: true
-- name : Open port 5432
-  firewalld:
-    port: 5432/tcp
-    permanent: true
-    state: enabled
-    immediate: true
 ```
 il permet d'ouvrir les ports : 80,22,5432 (HTTP,SSH,postgres)
 
