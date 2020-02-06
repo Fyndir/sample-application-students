@@ -15,7 +15,7 @@ docker network create ndevops
 ## Postgres
 ### Docker File
 
-```docker
+```dockerfile
 # On spécifie l'image de départ
 FROM postgres 
 # On definie les identifiant de la base de données
@@ -38,7 +38,7 @@ On connecte le contenaire au reseau ndevops avec l'option --network
 ## API Java
 
 ### Docker file
-```docker
+```dockerfile
 #Build
 
 # On definie l'image de base
@@ -75,7 +75,7 @@ On connecte le contenaire au reseau ndevops avec l'option --network
 
 ### Docker file
 
-```docker
+```dockerfile
 # On definie l'image de départ
 FROM httpd
 # On copy les sources dans le contenaire pour le reverse proxy
